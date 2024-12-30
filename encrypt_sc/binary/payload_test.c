@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    // unsigned char shellcode[] = "\xf3\x0f\x1e\xfa\xb8\x05\x00\x00\x00\xc3";
+    unsigned char shellcode[] = "\xf3\x0f\x1e\xfa\x48\x83\xec\x08\x48\x8d\x3d\x00\x00\x00\x00\xe8\x00\x00\x00\x00\xb8\x05\x00\x00\x00\x48\x83\xc4\x08\xc3";
+    int (*ret)();
+    ret = (int(*)())shellcode;
+    int value = ret();
+
+    printf("value = %d\n", value);
+    return 0;
+}
