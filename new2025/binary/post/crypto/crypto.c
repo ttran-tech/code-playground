@@ -19,12 +19,12 @@ void print_hash(unsigned char *hash)
     {
         printf("%02x", hash[i]);
     }
-    printf("\n");
+    printf(" | Length: %ld | Size: %ld\n", strlen(hash), sizeof(hash));
 }
 
-void base64_encode(const unsigned char *input, size_t length, unsigned char *base64_output)
+void base64_encode(unsigned char *output, unsigned char *input, size_t input_length)
 {
-    int base64_len = EVP_EncodeBlock((unsigned char*) base64_output, input, length);
-    base64_output[base64_len] = '\0';
+    int base64_len = EVP_EncodeBlock(output, input, input_length);
+    output[base64_len] = '\0';
 }
 
