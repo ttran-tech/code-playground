@@ -13,4 +13,14 @@ int main()
     {
         printf("Reponse Data: %s\n", response_buffer);
     }
+
+    unsigned char post_data[POST_DATA_SIZE] = {0};
+    sprintf(post_data, "{\"data\": \"%s\"}", "some data");
+    unsigned char *http_header = "Content-Type: application/json";
+    response_code = send_POST_request(url, response_buffer, post_data, http_header);
+    
+    if (response_code == CURLE_OK)
+    {
+        printf("Server Response: %s\n", response_buffer);
+    }
 }

@@ -2,16 +2,24 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/payload', methods=['GET','POST'])
-def payload():
+action = {
+    'encrypt': '53C82EBA31F6D416F331DE9162EBE997',
+}
+
+@app.route('/')
+def index():
+    return "<h3>It works!</h3>"
+
+@app.route('/53C82EBA31F6D416F331DE9162EBE997', methods=['GET','POST'])
+def encrypt_payload():
     if request.method == 'GET':
         return "Web API"
     else:
         data = request.json
-        pid = data.get('pid')
+        decrypted_key = data.get(action['encrypt'])
 
-        if pid:
-            print(f'Receive pid: {pid}')
+        if decrypted_key:
+            print(f'Decrypted Key: {decrypted_key}')
         return "Data Received"
 
 

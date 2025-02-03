@@ -1,12 +1,24 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define SIZE 5
+
+struct Routine {
+    void *r[SIZE];
+};
+
+void foo()
+{
+    printf("foo(): Hello world!\n");
+}
+
 int main()
 {
-    char post_data[256];
-    sprintf(post_data, "{\"pid\": \"%d\"}", getpid());
+    struct Routine routine;
 
-    printf("%s\n", post_data);
+    routine.r[0] = (void *) foo;
+
+    ((void (*)()) ((void *) routine.r[0]))();
 
     return 0;
 }

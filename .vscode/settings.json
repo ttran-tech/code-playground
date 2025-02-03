@@ -3,6 +3,14 @@
         "array": "c",
         "string_view": "c",
         "initializer_list": "c",
-        "utility": "c"
+        "utility": "c",
+        "vector": "c",
+        "memory": "c",
+        "optional": "c",
+        "string": "c",
+        "system_error": "c",
+        "stdio.h": "c",
+        "unistd.h": "c",
+        "request.h": "c"
     }
 }
