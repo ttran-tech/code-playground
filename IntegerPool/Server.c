@@ -6,28 +6,10 @@
 #include <sys/stat.h>
 
 #include "Common.h"
+#include "Request.h"
 #include "Pool.h"
 
-void request_number(Request request)
-{
-
-}
-
-void release_number(Request request)
-{
-
-}
-
-void handle_request(Request request)
-{
-
-}
-
-void print_request(Request request)
-{
-    printf("Process ID: %d\nRequest Type: %d\nValue: %d\n", request.process_id, request.request_type, request.value);
-}
-
+LList *pool_list;
 
 int main()
 {
@@ -35,7 +17,7 @@ int main()
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
 
     Request request;
-    LList *pool_list = llist_init();
+    pool_list = llist_init();
 
     printf("Server started.\n");
     while (TRUE)
