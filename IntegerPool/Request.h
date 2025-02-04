@@ -11,8 +11,8 @@ typedef struct Request
     int value;
 } Request;
 
-void handle_request(Request request, LList *pool_list);
-void request_number(Request request, LList *pool_list);
+int handle_request(Request request, LList *pool_list);
+int request_number(Request request, LList *pool_list);
 void release_number(Request request, LList *pool_list);
 void print_request(Request request);
 

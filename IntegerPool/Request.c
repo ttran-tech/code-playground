@@ -3,23 +3,36 @@
 #include "Request.h"
 #include "Common.h"
 
-void handle_request(Request request, LList *pool_list)
+int handle_request(Request request, LList *pool_list)
 {
-    int request_type = request.request_type;
+    int request_type, value;
+    request_type = request.request_type;
     switch(request_type)
     {
         case REQUEST_NUMBER:
-            request_number(request, pool_list); break;
+            value = request_number(request, pool_list); break;
         case RELEASE_NUMBER:
             release_number(request, pool_list); break;
         default:
             printf(" *** Invalid request\n"); break;
     }
+    return value;
 }
 
-void request_number(Request request, LList *pool_list)
+int request_number(Request request, LList *pool_list)
 {
+    if (llist_is_empty(pool_list))
+    {
+        ClientNode *client_node = create_client_node(request.process_id);
+        PoolNode *pool_node = create_pool_node(request.value, client_node);
+        pool_list->head = (void *) pool_node;
+        pool_list->tail = (void *) pool_node;
+        pool_list->size++;
+    }
+    else
+    {
 
+    }
 }
 
 void release_number(Request request, LList *pool_list)
