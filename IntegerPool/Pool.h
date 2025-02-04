@@ -28,7 +28,7 @@ LList *pool_list;
 ClientNode * create_client_node(pid_t client_pid);
 
 // PoolNode operators
-PoolNode * create_new_node(int value, ClientNode *client);
+PoolNode * create_pool_node(int value, ClientNode *client);
 
 // LList operators
 LList * llist_init();

@@ -14,7 +14,7 @@ ClientNode * create_client_node(pid_t client_pid)
     return client_node;
 }
 
-PoolNode * create_new_node(int value, ClientNode *client)
+PoolNode * create_pool_node(int value, ClientNode *client)
 {
     PoolNode *node = (PoolNode *) malloc(sizeof(PoolNode));
     if (node != NULL)
