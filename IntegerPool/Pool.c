@@ -49,13 +49,32 @@ void print_pool_list(LList *llist)
         PoolNode *pool_node = (PoolNode *) llist->head;
         while(pool_node != NULL)
         {
-            printf("Pool Node #%d\n", pool_node_count);
+            printf("Pool Node #%d\n-------------\n", pool_node_count);
             printf("Value: %d\n", pool_node->value);
             printf("In use: %d (1 = in use, 0 = free)\n", pool_node->is_in_use);
-            // print client list
+            print_client_list(pool_node->client);
             printf("------------------------------------------\n\n");
             pool_node = pool_node->next;
             pool_node_count++;
+        }
+    }
+    else 
+    {
+        printf(" Error: Pool list is NULL\n");
+    }
+}
+
+void print_client_list(ClientNode *client_node)
+{
+    if (client_node != NULL)
+    {
+        int client_count = 1;
+        printf("[ Client List ]\n");
+        while (client_node != NULL)
+        {
+            printf("Client #%d | PID: %d\n", client_count, client_node->client_pid);
+            client_node = client_node->next;
+            client_count++;
         }
     }
 }
