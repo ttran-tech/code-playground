@@ -20,7 +20,9 @@ int main()
     pool_list = llist_init();
     value = handle_request(request, pool_list);
 
-    printf("Returned value = %d\n", value);
+    print_pool_list(pool_list);
+
+    printf(" >>> Returned value = %d\n", value);
 
     return 0;
 }
