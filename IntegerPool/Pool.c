@@ -32,11 +32,11 @@ LList * llist_init()
     LList *llist = (LList *) malloc(sizeof(LList));
     llist->head = NULL;
     llist->tail = NULL;
-    llist->list_size = 0;
+    llist->size = 0;
     return llist;
 }
 
 int llist_is_empty(LList *llist)
 {
-    return (llist->list_size == 0);
+    return (llist->size == 0);
 }

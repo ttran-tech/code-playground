@@ -19,7 +19,7 @@ typedef struct LList
 {
     void *head;
     void *tail;
-    size_t list_size;
+    size_t size;
 } LList;
 
 LList *pool_list;
