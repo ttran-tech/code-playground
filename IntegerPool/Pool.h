@@ -23,6 +23,6 @@ typedef struct LList
 } LList;
 
 LList * llist_init();
-PoolNode * create_new_node(int value);
+PoolNode * create_new_node(int value, ClientNode *client);
 
 #endif
