@@ -34,4 +34,7 @@ PoolNode * create_pool_node(int value, ClientNode *client);
 LList * llist_init();
 int llist_is_empty(LList *llist);
 
+// Other operator
+void print_pool_list(LList *llist);
+
 #endif

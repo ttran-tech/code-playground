@@ -40,3 +40,22 @@ int llist_is_empty(LList *llist)
 {
     return (llist->size == 0);
 }
+
+void print_pool_list(LList *llist)
+{
+    if (llist->head != NULL)
+    {
+        int pool_node_count = 1;
+        PoolNode *pool_node = (PoolNode *) llist->head;
+        while(pool_node != NULL)
+        {
+            printf("Pool Node #%d\n", pool_node_count);
+            printf("Value: %d\n", pool_node->value);
+            printf("In use: %d (1 = in use, 0 = free)\n", pool_node->is_in_use);
+            // print client list
+            printf("------------------------------------------\n\n");
+            pool_node = pool_node->next;
+            pool_node_count++;
+        }
+    }
+}
