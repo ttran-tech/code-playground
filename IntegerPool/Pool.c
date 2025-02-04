@@ -1,19 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include "Pool.h"
 
-LList * llist_init()
+ClientNode * create_client_node(pid_t client_pid)
 {
-    LList *llist = (LList *) malloc(sizeof(LList));
-    llist->head = NULL;
-    llist->tail = NULL;
-    llist->list_size = 0;
-    return llist;
-}
-
-int llist_is_empty(LList *llist)
-{
-    return (llist->list_size == 0);
+    ClientNode *client_node = (ClientNode *) malloc(sizeof(ClientNode));
+    if (client_node != NULL)
+    {
+        client_node->client_pid = client_pid;
+        client_node->next = NULL;
+    }
+    return client_node;
 }
 
 PoolNode * create_new_node(int value, ClientNode *client)
@@ -27,4 +25,18 @@ PoolNode * create_new_node(int value, ClientNode *client)
         node->next = NULL;
     }
     return node;
+}
+
+LList * llist_init()
+{
+    LList *llist = (LList *) malloc(sizeof(LList));
+    llist->head = NULL;
+    llist->tail = NULL;
+    llist->list_size = 0;
+    return llist;
+}
+
+int llist_is_empty(LList *llist)
+{
+    return (llist->list_size == 0);
 }

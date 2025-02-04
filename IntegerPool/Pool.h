@@ -3,7 +3,7 @@
 
 typedef struct ClientNode 
 {
-    int client_id;
+    pid_t client_pid;
     struct ClientNode *next;
 } ClientNode;
 
@@ -24,9 +24,14 @@ typedef struct LList
 
 LList *pool_list;
 
+// ClientNode Operators
+ClientNode * create_client_node(pid_t client_pid);
+
+// PoolNode operators
+PoolNode * create_new_node(int value, ClientNode *client);
+
+// LList operators
 LList * llist_init();
 int llist_is_empty(LList *llist);
-
-PoolNode * create_new_node(int value, ClientNode *client);
 
 #endif
