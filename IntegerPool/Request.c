@@ -2,31 +2,29 @@
 #include <stdlib.h>
 #include "Request.h"
 #include "Common.h"
-#include "Pool.h"
 
-
-void request_number(Request request)
-{
-
-}
-
-void release_number(Request request)
-{
-
-}
-
-void handle_request(Request request)
+void handle_request(Request request, LList *pool_list)
 {
     int request_type = request.request_type;
     switch(request_type)
     {
         case REQUEST_NUMBER:
-            request_number(request); break;
+            request_number(request, pool_list); break;
         case RELEASE_NUMBER:
-            release_number(request); break;
+            release_number(request, pool_list); break;
         default:
             printf(" *** Invalid request\n"); break;
     }
+}
+
+void request_number(Request request, LList *pool_list)
+{
+
+}
+
+void release_number(Request request, LList *pool_list)
+{
+
 }
 
 void print_request(Request request)

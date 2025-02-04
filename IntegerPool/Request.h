@@ -2,6 +2,7 @@
 #define REQUEST_H
 
 #include <sys/types.h>
+#include "Pool.h"
 
 typedef struct Request
 {
@@ -10,9 +11,9 @@ typedef struct Request
     int value;
 } Request;
 
-void request_number(Request request);
-void release_number(Request request);
-void handle_request(Request request);
+void handle_request(Request request, LList *pool_list);
+void request_number(Request request, LList *pool_list);
+void release_number(Request request, LList *pool_list);
 void print_request(Request request);
 
 #endif
