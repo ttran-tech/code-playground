@@ -36,6 +36,7 @@ PoolNode * create_pool_node(int value, ClientNode *client);
 // LList operators
 LList * llist_init();
 int llist_is_empty(LList *llist);
+PoolNode * search_by_value(LList *llist, int value);
 
 // Other operator
 void print_pool_list(LList *llist);
