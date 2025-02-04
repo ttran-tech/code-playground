@@ -8,7 +8,7 @@
 #define FALSE 0
 
 // Pipe
-#define FIFO_PATH '/tmp/integerpool_fifo'
+#define FIFO_PATH "/tmp/integerpool_fifo"
 #define FIFO_PERMISSION 0666
 
 // Request type
