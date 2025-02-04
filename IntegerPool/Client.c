@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 
 #include "Common.h"
+#include "Request.h"
 
 int print_menu()
 {
