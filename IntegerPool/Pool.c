@@ -20,7 +20,7 @@ PoolNode * create_pool_node(int value, ClientNode *client)
     if (node != NULL)
     {
         node->value = value;
-        node->is_in_use = 1;
+        node->is_in_use = IN_USE;
         node->client = client;
         node->next = NULL;
     }

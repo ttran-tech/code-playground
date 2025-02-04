@@ -1,6 +1,9 @@
 #ifndef POOL_H
 #define POOL_H
 
+#define IN_USE 1
+#define FREE 0
+
 typedef struct ClientNode 
 {
     pid_t client_pid;
@@ -36,5 +39,5 @@ int llist_is_empty(LList *llist);
 
 // Other operator
 void print_pool_list(LList *llist);
-
+void print_client_list(ClientNode *client_node);
 #endif
