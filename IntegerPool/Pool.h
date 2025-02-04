@@ -25,6 +25,8 @@ typedef struct LList
 LList *pool_list;
 
 LList * llist_init();
+int llist_is_empty(LList *llist);
+
 PoolNode * create_new_node(int value, ClientNode *client);
 
 #endif

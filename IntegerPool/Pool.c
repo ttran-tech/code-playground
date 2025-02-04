@@ -11,6 +11,11 @@ LList * llist_init()
     return llist;
 }
 
+int llist_is_empty(LList *llist)
+{
+    return (llist->list_size == 0);
+}
+
 PoolNode * create_new_node(int value, ClientNode *client)
 {
     PoolNode *node = (PoolNode *) malloc(sizeof(PoolNode));
