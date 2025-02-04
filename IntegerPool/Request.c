@@ -32,7 +32,23 @@ int request_number(Request request, LList *pool_list)
     }
     else
     {
+        // value exist in pool_list
+        if (llist_is_in_list(pool_list, request.value))
+        {
+            PoolNode *pool_node = llist_search_by_value(pool_list, request.value);
+            ClientNode *client_node = create_client_node(request.process_id);
+            pool_node->client->next = client_node;
+        }
+        else 
+        {
+            ClientNode *client_node = create_client_node(request.process_id);
+            PoolNode *pool_node = create_pool_node(request.value, client_node);
+            ((PoolNode *)pool_list->tail)->next = (void *) pool_node; // point the next node of the tail to the new node
+            pool_list->tail = (void *) pool_node; // point the tail to the new node; new node is now became the tail
+            pool_list->size++;
+        }
 
+        return request.value;
     }
 }
 
