@@ -41,7 +41,7 @@ int llist_is_empty(LList *llist)
     return (llist->size == 0);
 }
 
-PoolNode * search_by_value(LList *llist, int value)
+PoolNode * llist_search_by_value(LList *llist, int value)
 {
     PoolNode *node = llist->head;
     if (node != NULL)
