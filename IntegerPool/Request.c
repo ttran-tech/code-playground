@@ -28,6 +28,7 @@ int request_number(Request request, LList *pool_list)
         pool_list->head = (void *) pool_node;
         pool_list->tail = (void *) pool_node;
         pool_list->size++;
+        return request.value;
     }
     else
     {
