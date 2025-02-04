@@ -34,6 +34,15 @@ void request_number(int *number_list)
     request.value = number;
 
     // send request to the server
+    int fd;
+    mkfifo(FIFO_PATH, FIFO_PERMISSION);
+    printf("Sending request...");
+    fd = open(FIFO_PATH, O_WRONLY);
+    if (write(fd, &request, sizeof(request)) != -1)
+    {
+        printf("Done\n");
+    }
+    close(fd);
 
     // add the number into the number list
 }
