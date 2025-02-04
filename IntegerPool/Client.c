@@ -20,7 +20,7 @@ int print_menu()
     return choice;
 }
 
-void request_number(int *number_list)
+void client_request_number(int *number_list)
 {
     int number;
     printf("\n---------------------------------\n");
@@ -48,7 +48,7 @@ void request_number(int *number_list)
     // add the number into the number list
 }
 
-void release_number(int *number_list)
+void client_release_number(int *number_list)
 {
     int number_index;
     printf("\n---------------------------------\n");
@@ -82,11 +82,11 @@ int main()
 
         if (menu_choice == REQUEST_NUMBER)
         {
-            request_number(number_list);
+            client_request_number(number_list);
         }
         else if (menu_choice == RELEASE_NUMBER)
         {
-            release_number(number_list);
+            client_release_number(number_list);
         }
         else if (menu_choice == EXIT)
         {
