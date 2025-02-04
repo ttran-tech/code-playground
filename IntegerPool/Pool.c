@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include "Pool.h"
+#include "Common.h"
 
 ClientNode * create_client_node(pid_t client_pid)
 {
@@ -56,6 +57,23 @@ PoolNode * llist_search_by_value(LList *llist, int value)
         }
     }
     return NULL;
+}
+
+int llist_is_in_list(LList *llist, int value)
+{
+    PoolNode *node = llist->head;
+    if (node != NULL)
+    {
+        while (node != NULL)
+        {
+            if (node->value == value)
+            {
+                return TRUE;
+            }
+            node = node->next;
+        }
+    }
+    return FALSE;
 }
 
 void print_pool_list(LList *llist)
