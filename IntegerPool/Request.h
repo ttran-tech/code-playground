@@ -11,6 +11,7 @@ typedef struct Request
     int value;
 } Request;
 
+// Server side
 int handle_request(Request request, LList *pool_list);
 int request_number(Request request, LList *pool_list);
 void release_number(Request request, LList *pool_list);
