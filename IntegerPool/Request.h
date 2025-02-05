@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 #include "Pool.h"
+#include "Response.h"
 
 typedef struct Request
 {
@@ -12,8 +13,8 @@ typedef struct Request
 } Request;
 
 // Server side
-int handle_request(Request request, LList *pool_list);
-int request_number(Request request, LList *pool_list);
+Response handle_request(Request request, LList *pool_list);
+Response request_number(Request request, LList *pool_list);
 void release_number(Request request, LList *pool_list);
 void print_request(Request request);
 

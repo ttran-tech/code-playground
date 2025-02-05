@@ -7,6 +7,12 @@
 
 #include "Common.h"
 #include "Request.h"
+#include "Response.h"
+
+typedef struct NumberList {
+    int value;
+    struct NumberList *next;
+} NumberList;
 
 int print_menu()
 {
@@ -69,6 +75,11 @@ void client_release_number(int *number_list)
     // send request to the server
 
     // remove number from the number list
+}
+
+void process_response()
+{
+
 }
 
 int main()

@@ -7,6 +7,7 @@
 
 #include "Common.h"
 #include "Request.h"
+#include "Response.h"
 #include "Pool.h"
 
 extern LList *pool_list;
@@ -17,6 +18,7 @@ int main()
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
 
     Request request;
+    Response response;
     pool_list = llist_init();
 
     printf("Server started.\n");
@@ -28,17 +30,16 @@ int main()
         fd = open(FIFO_PATH, O_RDONLY);
         read(fd, &request, sizeof(request));
         // print_request(request);
-        
-        int value;
-        value = handle_request(request, pool_list);
+
+        response = handle_request(request, pool_list);
         print_pool_list(pool_list);
-        printf(" >>> Returned value = %d\n\n", value);
         
         close(fd);
 
         // Handle write end
-
-
+        fd = open(FIFO_PATH, O_WRONLY);
+        write(fd, &response, sizeof(response));
+        close(fd);
     }
     return 0;
 }

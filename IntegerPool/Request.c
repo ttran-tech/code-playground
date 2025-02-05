@@ -3,24 +3,25 @@
 #include "Request.h"
 #include "Common.h"
 
-int handle_request(Request request, LList *pool_list)
+Response handle_request(Request request, LList *pool_list)
 {
-    int request_type, value;
-    request_type = request.request_type;
+    int request_type = request.request_type;
+    Response response;
     switch(request_type)
     {
         case REQUEST_NUMBER:
-            value = request_number(request, pool_list); break;
+            response = request_number(request, pool_list); break;
         case RELEASE_NUMBER:
             release_number(request, pool_list); break;
         default:
             printf(" *** Invalid request\n"); break;
     }
-    return value;
+    return response;
 }
 
-int request_number(Request request, LList *pool_list)
+Response request_number(Request request, LList *pool_list)
 {
+    Response response;
     if (llist_is_empty(pool_list))
     {
         ClientNode *client_node = create_client_node(request.process_id, "in use");
@@ -28,7 +29,9 @@ int request_number(Request request, LList *pool_list)
         pool_list->head = (void *) pool_node;
         pool_list->tail = (void *) pool_node;
         pool_list->size++;
-        return request.value;
+        response.client_id = client_node->client_pid;
+        response.value = pool_node->value;
+        return response;
     }
     else
     {
@@ -39,7 +42,7 @@ int request_number(Request request, LList *pool_list)
             ClientNode *client_node = create_client_node(request.process_id, "waiting");
 
             // add new client to the client list
-            ((ClientNode *)pool_node->client_list->tail)->next = client_node;
+            ((ClientNode *) pool_node->client_list->tail)->next = client_node;
             pool_node->client_list->tail = (void *) client_node;
             pool_node->client_list->size++;
         }
@@ -47,12 +50,14 @@ int request_number(Request request, LList *pool_list)
         {
             ClientNode *client_node = create_client_node(request.process_id, "in use");
             PoolNode *pool_node = create_pool_node(request.value, client_node);
-            ((PoolNode *)pool_list->tail)->next = pool_node; // point the next node of the tail to the new node
+            ((PoolNode *) pool_list->tail)->next = pool_node; // point the next node of the tail to the new node
             pool_list->tail = (void *) pool_node; // point the tail to the new node; new node is now became the tail
             pool_list->size++;
-        }
 
-        return request.value;
+            response.client_id = client_node->client_pid;
+            response.value = pool_node->value;
+            return response;
+        }
     }
 }
 
