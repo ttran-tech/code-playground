@@ -18,12 +18,14 @@ int main()
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
 
     Request request;
-    Response response;
     pool_list = llist_init();
 
     printf("Server started.\n");
     while (TRUE)
     {
+        Response response;  // Create a new response at every loop
+        response_init(&response);
+
         printf("Waiting for request...\n");
         
         // Handle read end
@@ -31,15 +33,12 @@ int main()
         read(fd, &request, sizeof(request));
         // print_request(request);
 
-        response = handle_request(request, pool_list);
+        handle_request(request, pool_list);
         print_pool_list(pool_list);
         
         close(fd);
 
-        // Handle write end
-        fd = open(FIFO_PATH, O_WRONLY);
-        write(fd, &response, sizeof(response));
-        close(fd);
+
     }
     return 0;
 }

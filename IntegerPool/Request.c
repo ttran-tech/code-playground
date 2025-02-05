@@ -3,25 +3,24 @@
 #include "Request.h"
 #include "Common.h"
 
-Response handle_request(Request request, LList *pool_list)
+void handle_request(Request request, LList *pool_list)
 {
     int request_type = request.request_type;
-    Response response;
     switch(request_type)
     {
         case REQUEST_NUMBER:
-            response = request_number(request, pool_list); break;
+            request_number(request, pool_list); break;
         case RELEASE_NUMBER:
             release_number(request, pool_list); break;
         default:
             printf(" *** Invalid request\n"); break;
     }
-    return response;
 }
 
-Response request_number(Request request, LList *pool_list)
+void request_number(Request request, LList *pool_list)
 {
     Response response;
+    response_init(&response);
     if (llist_is_empty(pool_list))
     {
         ClientNode *client_node = create_client_node(request.process_id, "in use");
@@ -29,9 +28,8 @@ Response request_number(Request request, LList *pool_list)
         pool_list->head = (void *) pool_node;
         pool_list->tail = (void *) pool_node;
         pool_list->size++;
-        response.client_id = client_node->client_pid;
-        response.value = pool_node->value;
-        return response;
+        response = generate_response(client_node->client_pid, pool_node->value);
+        write_response(&response);
     }
     else
     {
@@ -54,9 +52,8 @@ Response request_number(Request request, LList *pool_list)
             pool_list->tail = (void *) pool_node; // point the tail to the new node; new node is now became the tail
             pool_list->size++;
 
-            response.client_id = client_node->client_pid;
-            response.value = pool_node->value;
-            return response;
+            response = generate_response(client_node->client_pid, pool_node->value);
+            write_response(&response);
         }
     }
 }
