@@ -45,7 +45,7 @@ int request_number(Request request, LList *pool_list)
         }
         else 
         {
-            ClientNode *client_node = create_client_node(request.process_id, "waiting");
+            ClientNode *client_node = create_client_node(request.process_id, "in use");
             PoolNode *pool_node = create_pool_node(request.value, client_node);
             ((PoolNode *)pool_list->tail)->next = pool_node; // point the next node of the tail to the new node
             pool_list->tail = (void *) pool_node; // point the tail to the new node; new node is now became the tail
