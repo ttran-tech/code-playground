@@ -18,11 +18,11 @@ int main()
     request.value = 5;
 
     pool_list = llist_init();
-    value = handle_request(request, pool_list);
+    //value = handle_request(request, pool_list);
 
     print_pool_list(pool_list);
 
-    printf(" >>> Returned value = %d\n", value);
+    //printf(" >>> Returned value = %d\n", value);
 
     return 0;
 }
