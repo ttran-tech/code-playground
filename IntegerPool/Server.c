@@ -32,7 +32,7 @@ int main()
         int value;
         value = handle_request(request, pool_list);
         print_pool_list(pool_list);
-        printf(" >>> Returned value = %d\n", value);
+        printf(" >>> Returned value = %d\n\n", value);
         
         close(fd);
 
