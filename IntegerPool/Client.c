@@ -6,7 +6,8 @@ int print_menu()
     printf("\n---------------------------------\n");
     printf("1. Request a number\n");
     printf("2. Release a number\n");
-    printf("3. Exit\n");
+    printf("3. View number list\n");
+    printf("4. Exit\n");
     printf("\nChoice: ");
     scanf("%d", &choice);
     return choice;
@@ -47,7 +48,7 @@ void client_release_number(LList *number_list)
     printf("Release a number\n");
     for (int i = 0; i < NUMBER_LIST_SIZE; i++)
     {
-        printf("%d - %d\n", i, number_list[i]);
+        //printf("%d - %d\n", i, number_list[i]);
     }
     printf("\nEnter number index: ");
     scanf("%d", &number_index);
@@ -94,3 +95,16 @@ void process_response(LList *number_list)
     }
 }
 
+void print_number_list(LList *number_list)
+{
+    NumberNode *number_node = (NumberNode *) number_list->head;
+    
+    printf("Number List:\n [ ");
+    while (number_node != NULL)
+    {
+        int value = number_node->value;
+        printf("%d ", value);
+        number_node = number_node->next;
+    }
+    printf("]\n");
+}

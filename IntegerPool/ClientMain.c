@@ -17,6 +17,10 @@ int main()
         {
             client_release_number(number_list);
         }
+        else if (menu_choice == VIEW_NUMBER_LIST)
+        {
+            print_number_list(number_list);
+        }
         else if (menu_choice == EXIT)
         {
             break;
@@ -26,6 +30,6 @@ int main()
             printf(" *** Invalid choice\n");
         }
 
-        process_response(number_list);
+        //process_response(number_list);
     }
 }

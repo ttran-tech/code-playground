@@ -21,5 +21,6 @@ int print_menu();
 void client_request_number(LList *number_list);
 void client_release_number(LList *number_list);
 void process_response(LList *number_list);
+void print_number_list(LList *number_list);
 
 #endif
