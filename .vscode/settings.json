@@ -11,6 +11,16 @@
         "system_error": "c",
         "stdio.h": "c",
         "unistd.h": "c",
-        "request.h": "c"
+        "request.h": "c",
+        "fcntl.h": "c",
+        "stdlib.h": "c",
+        "stat.h": "c",
+        "common.h": "c",
+        "pool.h": "c",
+        "istream": "c",
+        "ostream": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c"
     }
 }
