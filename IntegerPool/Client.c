@@ -9,10 +9,10 @@
 #include "Request.h"
 #include "Response.h"
 
-typedef struct NumberList {
+typedef struct NumberNode {
     int value;
-    struct NumberList *next;
-} NumberList;
+    struct NumberNode *next;
+} NumberNode;
 
 int print_menu()
 {
@@ -26,7 +26,7 @@ int print_menu()
     return choice;
 }
 
-void client_request_number(int *number_list)
+void client_request_number(LList *number_list)
 {
     int number;
     printf("\n---------------------------------\n");
@@ -54,7 +54,7 @@ void client_request_number(int *number_list)
     // add the number into the number list
 }
 
-void client_release_number(int *number_list)
+void client_release_number(LList *number_list)
 {
     int number_index;
     printf("\n---------------------------------\n");
@@ -77,14 +77,18 @@ void client_release_number(int *number_list)
     // remove number from the number list
 }
 
-void process_response()
+void process_response(NumberNode *number_list)
 {
-
+    Response response;
+    int fd;
+    mkfifo(FIFO_PATH, FIFO_PERMISSION);
+    fd = open(FIFO_PATH, FIFO_PERMISSION);
+    read(fd, &response, sizeof(Response));
 }
 
 int main()
 {
-    int number_list[NUMBER_LIST_SIZE];
+    LList *number_list = (LList *) malloc(sizeof(LList));
     int menu_choice = 0;
 
     while (TRUE)
