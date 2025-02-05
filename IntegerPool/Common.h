@@ -12,6 +12,7 @@
 // Request type
 #define REQUEST_NUMBER 1
 #define RELEASE_NUMBER 2
-#define EXIT 3
+#define VIEW_NUMBER_LIST 3
+#define EXIT 4
 
 #endif
