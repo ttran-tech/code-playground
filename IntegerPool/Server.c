@@ -9,7 +9,7 @@
 #include "Request.h"
 #include "Pool.h"
 
-LList *pool_list;
+extern LList *pool_list;
 
 int main()
 {
@@ -27,8 +27,13 @@ int main()
         // Handle read end
         fd = open(FIFO_PATH, O_RDONLY);
         read(fd, &request, sizeof(request));
-        print_request(request);
-        handle_request(request);
+        // print_request(request);
+        
+        int value;
+        value = handle_request(request, pool_list);
+        print_pool_list(pool_list);
+        printf(" >>> Returned value = %d\n", value);
+        
         close(fd);
 
         // Handle write end
