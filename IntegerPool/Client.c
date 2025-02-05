@@ -1,18 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#include "Common.h"
-#include "Request.h"
-#include "Response.h"
-
-typedef struct NumberNode {
-    int value;
-    struct NumberNode *next;
-} NumberNode;
+#include "Client.h"
 
 int print_menu()
 {
@@ -67,49 +53,44 @@ void client_release_number(LList *number_list)
     scanf("%d", &number_index);
 
     // create a request
-    Request request;
-    request.process_id = getpid();
-    request.request_type = RELEASE_NUMBER;
-    request.value = number_list[number_index];
+    // Request request;
+    // request.process_id = getpid();
+    // request.request_type = RELEASE_NUMBER;
+    // request.value = number_list[number_index];
 
     // send request to the server
 
     // remove number from the number list
 }
 
-void process_response(NumberNode *number_list)
+void process_response(LList *number_list)
 {
     Response response;
     int fd;
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
     fd = open(FIFO_PATH, FIFO_PERMISSION);
     read(fd, &response, sizeof(Response));
-}
-
-int main()
-{
-    LList *number_list = (LList *) malloc(sizeof(LList));
-    int menu_choice = 0;
-
-    while (TRUE)
+    if (response.client_id == getpid())
     {
-        menu_choice = print_menu();
+        NumberNode *number_node = (NumberNode *) malloc(sizeof(NumberNode));
+        if (number_node != NULL)
+        {
+            number_node->value = response.value;
+            number_node->next = NULL;
+        }
 
-        if (menu_choice == REQUEST_NUMBER)
+        if (number_list->size != 0)
         {
-            client_request_number(number_list);
-        }
-        else if (menu_choice == RELEASE_NUMBER)
-        {
-            client_release_number(number_list);
-        }
-        else if (menu_choice == EXIT)
-        {
-            break;
+            number_list->head = (void *) number_node;
+            number_list->tail = number_list->head;
+            number_list->size++;
         }
         else
         {
-            printf(" *** Invalid choice\n");
+            ((NumberNode *) number_list->tail)->next = number_node;
+            number_list->tail = (void *) number_node;
+            number_list->size++;
         }
     }
 }
+
