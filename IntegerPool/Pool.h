@@ -4,9 +4,17 @@
 #define IN_USE 1
 #define FREE 0
 
+typedef struct LList
+{
+    void *head;
+    void *tail;
+    size_t size;
+} LList;
+
 typedef struct ClientNode 
 {
     pid_t client_pid;
+    char *status;
     struct ClientNode *next;
 } ClientNode;
 
@@ -14,16 +22,11 @@ typedef struct PoolNode
 {
     int value;
     int is_in_use;  // 1 = in used, 0 = free
-    ClientNode *client;
+    ClientNode *current_client;
+    struct LList *client_list;
     struct PoolNode *next;
 } PoolNode;
 
-typedef struct LList
-{
-    void *head;
-    void *tail;
-    size_t size;
-} LList;
 
 LList *pool_list;
 

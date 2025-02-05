@@ -22,7 +22,19 @@ PoolNode * create_pool_node(int value, ClientNode *client)
     {
         node->value = value;
         node->is_in_use = IN_USE;
-        node->client = client;
+
+        // create client list
+        LList *client_list = (LList *) malloc(sizeof(LList));
+        if (client_list != NULL)
+        {
+            client_list->head = (void *) client;
+            client_list->tail = (void *) client;
+            client_list->size++;
+
+            node->current_client = (ClientNode *) client_list->head;
+            node->client_list = client_list;
+        }
+
         node->next = NULL;
     }
     return node;
@@ -87,7 +99,7 @@ void print_pool_list(LList *llist)
             printf("Pool Node #%d\n-------------\n", pool_node_count);
             printf("Value: %d\n", pool_node->value);
             printf("In use: %d (1 = in use, 0 = free)\n", pool_node->is_in_use);
-            print_client_list(pool_node->client);
+            print_client_list(pool_node->current_client);
             printf("------------------------------------------\n\n");
             pool_node = pool_node->next;
             pool_node_count++;
