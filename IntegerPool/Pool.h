@@ -31,7 +31,7 @@ typedef struct PoolNode
 LList *pool_list;
 
 // ClientNode Operators
-ClientNode * create_client_node(pid_t client_pid);
+ClientNode * create_client_node(pid_t client_pid, const char *status);
 
 // PoolNode operators
 PoolNode * create_pool_node(int value, ClientNode *client);

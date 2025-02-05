@@ -4,12 +4,13 @@
 #include "Pool.h"
 #include "Common.h"
 
-ClientNode * create_client_node(pid_t client_pid)
+ClientNode * create_client_node(pid_t client_pid, const char *status)
 {
     ClientNode *client_node = (ClientNode *) malloc(sizeof(ClientNode));
     if (client_node != NULL)
     {
         client_node->client_pid = client_pid;
+        client_node->status = status;
         client_node->next = NULL;
     }
     return client_node;
@@ -100,7 +101,7 @@ void print_pool_list(LList *llist)
             printf("Value: %d\n", pool_node->value);
             printf("In use: %d (1 = in use, 0 = free)\n", pool_node->is_in_use);
             print_client_list(pool_node->current_client);
-            printf("------------------------------------------\n\n");
+            printf("\n------------------------------------------\n\n");
             pool_node = pool_node->next;
             pool_node_count++;
         }
@@ -119,7 +120,7 @@ void print_client_list(ClientNode *client_node)
         printf("[ Client List ]\n");
         while (client_node != NULL)
         {
-            printf("Client #%d | PID: %d\n", client_count, client_node->client_pid);
+            printf("Client #%d | PID: %d | Status: %s\n", client_count, client_node->client_pid, client_node->status);
             client_node = client_node->next;
             client_count++;
         }
