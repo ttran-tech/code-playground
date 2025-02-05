@@ -69,7 +69,7 @@ void process_response(LList *number_list)
     Response response;
     int fd;
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
-    fd = open(FIFO_PATH, FIFO_PERMISSION);
+    fd = open(FIFO_PATH, O_RDONLY);
     read(fd, &response, sizeof(Response));
     if (response.client_id == getpid())
     {
