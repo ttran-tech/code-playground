@@ -25,5 +25,7 @@ int main()
         {
             printf(" *** Invalid choice\n");
         }
+
+        process_response(number_list);
     }
 }
