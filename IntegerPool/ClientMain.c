@@ -30,6 +30,6 @@ int main()
             printf(" *** Invalid choice\n");
         }
 
-        //process_response(number_list);
+        process_response(number_list);
     }
 }
