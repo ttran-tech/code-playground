@@ -4,9 +4,13 @@
 #include <sys/types.h>
 #include "Pool.h"
 
+#define GRANTED 1
+#define WAITING 2
+
 typedef struct Response
 {
     pid_t client_id;
+    int response_type; // 1 = granted, 2 = waiting
     int value;
 } Response;
 
