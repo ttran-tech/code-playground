@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <semaphore.h>
+
 #define NUMBER_LIST_SIZE 5
 #define TRUE 1
 #define FALSE 0
@@ -15,4 +17,5 @@
 #define VIEW_NUMBER_LIST 3
 #define EXIT 4
 
+sem_t *sem_server, *sem_client;
 #endif
