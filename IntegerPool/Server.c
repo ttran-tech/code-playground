@@ -23,9 +23,6 @@ int main()
     printf("Server started.\n");
     while (TRUE)
     {
-        Response response;  // Create a new response at every loop
-        response_init(&response);
-
         printf("Waiting for request...\n");
         
         // Handle read end
