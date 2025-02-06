@@ -90,7 +90,14 @@ void process_response(LList *number_list)
     }
     else
     {
-        printf("Response:\n Process ID: %d\n Value: %d", response.client_id, response.value);
+        if (response.response_type == GRANTED)
+        {
+            printf("Response:\n Process ID: %d\n Value: %d", response.client_id, response.value);
+        }
+        else if (response.response_type == WAITING)
+        {
+            printf("Response: number is in-used\n");
+        }
     }
     
     close(fd);
