@@ -19,8 +19,6 @@ void handle_request(Request request, LList *pool_list)
 
 void request_number(Request request, LList *pool_list)
 {
-    Response response;
-    response_init(&response);
     if (llist_is_empty(pool_list))
     {
         ClientNode *client_node = create_client_node(request.process_id, "in use");
@@ -28,8 +26,7 @@ void request_number(Request request, LList *pool_list)
         pool_list->head = (void *) pool_node;
         pool_list->tail = (void *) pool_node;
         pool_list->size++;
-        response = generate_response(client_node->client_pid, pool_node->value);
-        write_response(&response);
+        write_response(request.process_id, GRANTED ,request.value);
     }
     else
     {
@@ -43,6 +40,7 @@ void request_number(Request request, LList *pool_list)
             ((ClientNode *) pool_node->client_list->tail)->next = client_node;
             pool_node->client_list->tail = (void *) client_node;
             pool_node->client_list->size++;
+            write_response(-1, WAITING, -1);
         }
         else 
         {
@@ -51,9 +49,7 @@ void request_number(Request request, LList *pool_list)
             ((PoolNode *) pool_list->tail)->next = pool_node; // point the next node of the tail to the new node
             pool_list->tail = (void *) pool_node; // point the tail to the new node; new node is now became the tail
             pool_list->size++;
-
-            response = generate_response(client_node->client_pid, pool_node->value);
-            write_response(&response);
+            write_response(request.process_id, GRANTED, request.value);
         }
     }
 }
