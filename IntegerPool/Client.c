@@ -1,3 +1,4 @@
+#include <errno.h>
 #include "Client.h"
 
 int print_menu()
@@ -39,6 +40,7 @@ void client_request_number(LList *number_list)
     close(fd);
 
     // add the number into the number list
+    process_response(number_list);
 }
 
 void client_release_number(LList *number_list)
@@ -66,33 +68,55 @@ void client_release_number(LList *number_list)
 
 void process_response(LList *number_list)
 {
+    printf("process response\n");
     Response response;
     int fd;
-    mkfifo(FIFO_PATH, FIFO_PERMISSION);
-    fd = open(FIFO_PATH, O_RDONLY);
-    read(fd, &response, sizeof(Response));
-    if (response.client_id == getpid())
+    if (mkfifo(FIFO_PATH, FIFO_PERMISSION) == -1 && errno != EEXIST)
     {
-        NumberNode *number_node = (NumberNode *) malloc(sizeof(NumberNode));
-        if (number_node != NULL)
-        {
-            number_node->value = response.value;
-            number_node->next = NULL;
-        }
-
-        if (number_list->size != 0)
-        {
-            number_list->head = (void *) number_node;
-            number_list->tail = number_list->head;
-            number_list->size++;
-        }
-        else
-        {
-            ((NumberNode *) number_list->tail)->next = number_node;
-            number_list->tail = (void *) number_node;
-            number_list->size++;
-        }
+        perror("mkfifo");
+        exit(EXIT_FAILURE);
     }
+    
+    if((fd = open(FIFO_PATH, O_RDONLY)) == -1)
+    {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
+
+    if (read(fd, &response, sizeof(response)) == -1)
+    {
+        perror("read");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        printf("Response:\n Process ID: %d\n Value: %d", response.client_id, response.value);
+    }
+    
+    close(fd);
+
+    // if (response.client_id == getpid())
+    // {
+    //     NumberNode *number_node = (NumberNode *) malloc(sizeof(NumberNode));
+    //     if (number_node != NULL)
+    //     {
+    //         number_node->value = response.value;
+    //         number_node->next = NULL;
+    //     }
+
+    //     if (number_list->size != 0)
+    //     {
+    //         number_list->head = (void *) number_node;
+    //         number_list->tail = number_list->head;
+    //         number_list->size++;
+    //     }
+    //     else
+    //     {
+    //         ((NumberNode *) number_list->tail)->next = number_node;
+    //         number_list->tail = (void *) number_node;
+    //         number_list->size++;
+    //     }
+    // }
 }
 
 void print_number_list(LList *number_list)
