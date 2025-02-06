@@ -14,8 +14,8 @@ typedef struct Response
     int value;
 } Response;
 
-void response_init(Response *response);
-Response generate_response(pid_t client_id, int value);
-void write_response(Response *response);
+// void response_init(Response *response);
+// Response generate_response(pid_t client_id, int value);
+void write_response(pid_t client_id, int response_type, int value);
 
 #endif
