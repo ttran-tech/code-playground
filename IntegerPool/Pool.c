@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
-#include "Pool.h"
-#include "Common.h"
 
-ClientNode * create_client_node(pid_t client_pid, char *status)
+#include "Common.h"
+#include "Pool.h"
+
+ClientNode * ClientNode_create(pid_t client_pid, char *status)
 {
     ClientNode *client_node = (ClientNode *) malloc(sizeof(ClientNode));
     if (client_node != NULL)
@@ -16,7 +17,7 @@ ClientNode * create_client_node(pid_t client_pid, char *status)
     return client_node;
 }
 
-PoolNode * create_pool_node(int value, ClientNode *client)
+PoolNode * PoolNode_create(int value, ClientNode *client)
 {
     PoolNode *node = (PoolNode *) malloc(sizeof(PoolNode));
     if (node != NULL)
@@ -41,21 +42,7 @@ PoolNode * create_pool_node(int value, ClientNode *client)
     return node;
 }
 
-LList * llist_init()
-{
-    LList *llist = (LList *) malloc(sizeof(LList));
-    llist->head = NULL;
-    llist->tail = NULL;
-    llist->size = 0;
-    return llist;
-}
-
-int llist_is_empty(LList *llist)
-{
-    return (llist->size == 0);
-}
-
-PoolNode * llist_search_by_value(LList *llist, int value)
+PoolNode * PoolNode_search(LList *llist, int value)
 {
     PoolNode *node = llist->head;
     if (node != NULL)
@@ -72,7 +59,7 @@ PoolNode * llist_search_by_value(LList *llist, int value)
     return NULL;
 }
 
-int llist_is_in_list(LList *llist, int value)
+int PoolNode_has_value(LList *llist, int value)
 {
     PoolNode *node = llist->head;
     if (node != NULL)
@@ -89,7 +76,7 @@ int llist_is_in_list(LList *llist, int value)
     return FALSE;
 }
 
-void print_pool_list(LList *llist)
+void PoolList_print(LList *llist)
 {
     if (llist->head != NULL)
     {
@@ -100,7 +87,7 @@ void print_pool_list(LList *llist)
             printf("\nPool Node #%d\n-------------\n", pool_node_count);
             printf("Value: %d\n", pool_node->value);
             printf("In use: %d (1 = in use, 0 = free)\n", pool_node->is_in_use);
-            print_client_list(pool_node->current_client);
+            ClientList_print(pool_node->current_client);
             printf("------------------------------------------\n");
             pool_node = pool_node->next;
             pool_node_count++;
@@ -112,7 +99,7 @@ void print_pool_list(LList *llist)
     }
 }
 
-void print_client_list(ClientNode *client_node)
+void ClientList_print(ClientNode *client_node)
 {
     if (client_node != NULL)
     {

@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Request.h"
+
 #include "Common.h"
+#include "LList.h"
+#include "Request.h"
+#include "Pool.h"
 
 void handle_request(Request request, LList *pool_list)
 {
@@ -19,10 +22,10 @@ void handle_request(Request request, LList *pool_list)
 
 void request_number(Request request, LList *pool_list)
 {
-    if (llist_is_empty(pool_list))
+    if (LList_is_empty(pool_list))
     {
-        ClientNode *client_node = create_client_node(request.process_id, "in use");
-        PoolNode *pool_node = create_pool_node(request.value, client_node);
+        ClientNode *client_node = ClientNode_create(request.process_id, "in use");
+        PoolNode *pool_node = PoolNode_create(request.value, client_node);
         pool_list->head = (void *) pool_node;
         pool_list->tail = (void *) pool_node;
         pool_list->size++;
@@ -31,10 +34,10 @@ void request_number(Request request, LList *pool_list)
     else
     {
         // value exist in pool_list
-        if (llist_is_in_list(pool_list, request.value))
+        if (PoolNode_has_value(pool_list, request.value))
         {
-            PoolNode *pool_node = llist_search_by_value(pool_list, request.value);
-            ClientNode *client_node = create_client_node(request.process_id, "waiting");
+            PoolNode *pool_node = PoolNode_search(pool_list, request.value);
+            ClientNode *client_node = ClientNode_create(request.process_id, "waiting");
 
             // add new client to the client list
             ((ClientNode *) pool_node->client_list->tail)->next = client_node;
@@ -44,8 +47,8 @@ void request_number(Request request, LList *pool_list)
         }
         else 
         {
-            ClientNode *client_node = create_client_node(request.process_id, "in use");
-            PoolNode *pool_node = create_pool_node(request.value, client_node);
+            ClientNode *client_node = ClientNode_create(request.process_id, "in use");
+            PoolNode *pool_node = PoolNode_create(request.value, client_node);
             ((PoolNode *) pool_list->tail)->next = pool_node; // point the next node of the tail to the new node
             pool_list->tail = (void *) pool_node; // point the tail to the new node; new node is now became the tail
             pool_list->size++;
