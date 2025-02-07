@@ -8,15 +8,21 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "Common.h"
+#include "LList.h"
 #include "Request.h"
 #include "Pool.h"
-#include "Common.h"
 
 typedef struct NumberNode {
     int value;
     struct NumberNode *next;
 } NumberNode;
 
+// NumberNode operations
+NumberNode * NumberNode_search(LList *llist, int value);
+int NumberNode_has_value(LList *llist, int value);
+
+// Other operations
 int print_menu();
 void client_request_number(LList *number_list);
 void client_release_number(LList *number_list);

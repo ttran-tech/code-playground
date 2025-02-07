@@ -2,7 +2,7 @@
 
 int main()
 {
-    LList *number_list = llist_init();
+    LList *number_list = LList_init();
     int menu_choice = 0;
 
     while (TRUE)

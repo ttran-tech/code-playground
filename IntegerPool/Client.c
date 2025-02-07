@@ -3,6 +3,16 @@
 
 #include "Client.h"
 
+NumberNode * NumberNode_search(LList *llist, int value)
+{
+
+}
+
+int NumberNode_has_value(LList *llist, int value)
+{
+    
+}
+
 int print_menu()
 {
     int choice;
@@ -122,7 +132,7 @@ void process_response(LList *number_list)
             NumberNode *number_node = (NumberNode *) malloc(sizeof(NumberNode));
             number_node->value = response.value;
             number_node->next = NULL;
-            if (llist_is_empty(number_list))
+            if (LList_is_empty(number_list))
             {
                 number_list->head = (void *) number_node;
                 number_list->tail = (void *) number_node;

@@ -12,7 +12,7 @@ void write_response(pid_t client_id, int response_type, int value)
 {   
     int fd;
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
-    printf("Response:\n Process ID: %d\n Value: %d", client_id, value);
+    // printf("Response:\n Process ID: %d\n Value: %d", client_id, value);
     //Handle write end
     Response response;
     response.client_id = client_id;

@@ -1,15 +1,10 @@
 #ifndef POOL_H
 #define POOL_H
 
+#include "LList.h"
+
 #define IN_USE 1
 #define FREE 0
-
-typedef struct LList
-{
-    void *head;
-    void *tail;
-    size_t size;
-} LList;
 
 typedef struct ClientNode 
 {
@@ -31,18 +26,15 @@ typedef struct PoolNode
 LList *pool_list;
 
 // ClientNode Operators
-ClientNode * create_client_node(pid_t client_pid, char *status);
+ClientNode * ClientNode_create(pid_t client_pid, char *status);
 
 // PoolNode operators
-PoolNode * create_pool_node(int value, ClientNode *client);
-
-// LList operators
-LList * llist_init();
-int llist_is_empty(LList *llist);
-PoolNode * llist_search_by_value(LList *llist, int value);
-int llist_is_in_list(LList *llist, int value);
+PoolNode * PoolNode_create(int value, ClientNode *client);
+PoolNode * PoolNode_search(LList *llist, int value);
+int PoolNode_has_value(LList *llist, int value);
 
 // Other operator
-void print_pool_list(LList *llist);
-void print_client_list(ClientNode *client_node);
+void PoolList_print(LList *llist);
+void ClientList_print(ClientNode *client_node);
+
 #endif
