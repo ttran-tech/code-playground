@@ -1,11 +1,11 @@
 CC = gcc
 
 # define the source and object files for the server
-SERVER_SRC = Pool.c Request.c Response.c Server.c 
+SERVER_SRC = LList.c Pool.c Request.c Response.c Server.c 
 SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
 # source and object files for the client
-CLIENT_SRC = ClientMain.c Pool.c Request.c Response.c Client.c
+CLIENT_SRC = LList.c ClientMain.c Pool.c Request.c Response.c Client.c
 CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
 
 # Exec files
@@ -30,3 +30,6 @@ clean:
 clean_obj:
 	rm -f $(SERVER_OBJ)
 	rm -f $(CLIENT_OBJ)
+
+pro:
+	make clean && make all && make clean_obj
