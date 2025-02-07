@@ -4,19 +4,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+
 #include "Response.h"
 #include "Common.h"
 
-// Response generate_response(pid_t client_id, int value)
-// {
-//     Response response;
-//     response.client_id = client_id;
-//     response.value = value;
-//     return response;
-// }
-
 void write_response(pid_t client_id, int response_type, int value)
-{
+{   
     int fd;
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
     printf("Response:\n Process ID: %d\n Value: %d", client_id, value);

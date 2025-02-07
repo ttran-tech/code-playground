@@ -1,10 +1,12 @@
 #include <errno.h>
+#include <unistd.h>
+
 #include "Client.h"
 
 int print_menu()
 {
     int choice;
-    printf("\n---------------------------------\n");
+    printf("---------------------------------\n");
     printf("1. Request a number\n");
     printf("2. Release a number\n");
     printf("3. View number list\n");
@@ -17,7 +19,7 @@ int print_menu()
 void client_request_number(LList *number_list)
 {
     int number;
-    printf("\n---------------------------------\n");
+    printf("---------------------------------\n");
     printf("Request a number\n");
     printf("Enter a number: ");
     scanf("%d", &number);
@@ -31,7 +33,9 @@ void client_request_number(LList *number_list)
     // send request to the server
     int fd;
     mkfifo(FIFO_PATH, FIFO_PERMISSION);
+    printf("---------------------------------\n");
     printf("Sending request...");
+
     fd = open(FIFO_PATH, O_WRONLY);
     if (write(fd, &request, sizeof(request)) != -1)
     {
@@ -39,14 +43,14 @@ void client_request_number(LList *number_list)
     }
     close(fd);
 
-    // add the number into the number list
+    printf("---------------------------------\n");
     process_response(number_list);
 }
 
 void client_release_number(LList *number_list)
 {
     int number_index;
-    printf("\n---------------------------------\n");
+    printf("---------------------------------\n");
     printf("Release a number\n");
     for (int i = 0; i < NUMBER_LIST_SIZE; i++)
     {
@@ -68,39 +72,48 @@ void client_release_number(LList *number_list)
 
 void process_response(LList *number_list)
 {
-    printf("process response\n");
     Response response;
     int fd;
+
+    printf(" *** Obtaining mkfifo...");
     if (mkfifo(FIFO_PATH, FIFO_PERMISSION) == -1 && errno != EEXIST)
     {
         perror("mkfifo");
         exit(EXIT_FAILURE);
     }
-    
-    if((fd = open(FIFO_PATH, O_RDONLY)) == -1)
+    printf("Done\n");
+
+    printf(" *** Opening FIFO...");
+    while((fd = open(FIFO_PATH, O_RDONLY)) == -1)
     {
         perror("open");
-        exit(EXIT_FAILURE);
+        printf("Retry opening FIFO...\n");
+        usleep(1000000); // Sleep for 100ms before retrying
     }
+    printf("Done\n");
 
-    if (read(fd, &response, sizeof(response)) == -1)
+    printf(" *** Reading response...");
+    while (read(fd, &response, sizeof(response)) == -1)
     {
         perror("read");
-        exit(EXIT_FAILURE);
+        printf("Retry reading response...\n");
+        usleep(1000000); // Sleep for 100ms before retrying
     }
-    else
-    {
-        if (response.response_type == GRANTED)
-        {
-            printf("Response:\n Process ID: %d\n Value: %d", response.client_id, response.value);
-        }
-        else if (response.response_type == WAITING)
-        {
-            printf("Response: number is in-used\n");
-        }
-    }
-    
     close(fd);
+    printf("Done\n");
+    
+    printf(" *** Response received...\n");
+    printf("---------------------------------\n");
+    printf(" >> Response Type: %d (1 = GRANTED, 2 = WAITING)\n", response.response_type);
+    
+    if (response.response_type == GRANTED)
+    {
+        printf(" >> Process ID: %d | Value: %d\n", response.client_id, response.value);
+    }
+    else if (response.response_type == WAITING)
+    {
+        printf(" >> Number is in-used\n");
+    }
 
     // if (response.client_id == getpid())
     // {
