@@ -6,20 +6,20 @@
 int print_menu()
 {
     int choice;
-    printf("---------------------------------\n");
     printf("1. Request a number\n");
     printf("2. Release a number\n");
     printf("3. View number list\n");
     printf("4. Exit\n");
     printf("\nChoice: ");
     scanf("%d", &choice);
+
+    printf("---------------------------------\n");
     return choice;
 }
 
 void client_request_number(LList *number_list)
 {
     int number;
-    printf("---------------------------------\n");
     printf("Request a number\n");
     printf("Enter a number: ");
     scanf("%d", &number);
@@ -50,7 +50,6 @@ void client_request_number(LList *number_list)
 void client_release_number(LList *number_list)
 {
     int number_index;
-    printf("---------------------------------\n");
     printf("Release a number\n");
     for (int i = 0; i < NUMBER_LIST_SIZE; i++)
     {
@@ -114,41 +113,45 @@ void process_response(LList *number_list)
     {
         printf(" >> Number is in-used\n");
     }
+    printf("---------------------------------\n");
 
-    // if (response.client_id == getpid())
-    // {
-    //     NumberNode *number_node = (NumberNode *) malloc(sizeof(NumberNode));
-    //     if (number_node != NULL)
-    //     {
-    //         number_node->value = response.value;
-    //         number_node->next = NULL;
-    //     }
-
-    //     if (number_list->size != 0)
-    //     {
-    //         number_list->head = (void *) number_node;
-    //         number_list->tail = number_list->head;
-    //         number_list->size++;
-    //     }
-    //     else
-    //     {
-    //         ((NumberNode *) number_list->tail)->next = number_node;
-    //         number_list->tail = (void *) number_node;
-    //         number_list->size++;
-    //     }
-    // }
+    if (response.client_id == getpid())
+    {
+        if (response.response_type == GRANTED)
+        {
+            NumberNode *number_node = (NumberNode *) malloc(sizeof(NumberNode));
+            number_node->value = response.value;
+            number_node->next = NULL;
+            if (llist_is_empty(number_list))
+            {
+                number_list->head = (void *) number_node;
+                number_list->tail = (void *) number_node;
+                number_list->size++;
+            }
+            else
+            {
+                ((NumberNode *)(number_list->tail))->next = number_node;
+                number_list->tail = (void *) number_node;
+                number_list->size++;
+            }
+        }
+    }
+    print_number_list(number_list);
 }
 
 void print_number_list(LList *number_list)
 {
     NumberNode *number_node = (NumberNode *) number_list->head;
     
-    printf("Number List:\n [ ");
+    printf("Number List:\n [");
     while (number_node != NULL)
     {
         int value = number_node->value;
-        printf("%d ", value);
+        printf("%d", value);
+        //(number_node->next != NULL) ? printf(" | "): printf("%s", "");
+        (number_node->next != NULL) ? printf(" | "): (void)0;
         number_node = number_node->next;
     }
     printf("]\n");
+    printf("---------------------------------\n");
 }
