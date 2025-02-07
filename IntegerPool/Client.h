@@ -13,14 +13,7 @@
 #include "Request.h"
 #include "Pool.h"
 
-typedef struct NumberNode {
-    int value;
-    struct NumberNode *next;
-} NumberNode;
 
-// NumberNode operations
-NumberNode * NumberNode_search(LList *llist, int value);
-int NumberNode_has_value(LList *llist, int value);
 
 // Other operations
 int print_menu();

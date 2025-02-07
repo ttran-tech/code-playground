@@ -2,16 +2,7 @@
 #include <unistd.h>
 
 #include "Client.h"
-
-NumberNode * NumberNode_search(LList *llist, int value)
-{
-
-}
-
-int NumberNode_has_value(LList *llist, int value)
-{
-    
-}
+#include "Number.h"
 
 int print_menu()
 {
