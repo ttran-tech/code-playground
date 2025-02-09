@@ -5,6 +5,8 @@
 #include "Common.h"
 #include "Pool.h"
 
+const char* NUMBER_STATUS[2] = {"FREE", "IN USE"};
+
 ClientNode * ClientNode_create(pid_t client_pid, char *status)
 {
     ClientNode *client_node = (ClientNode *) malloc(sizeof(ClientNode));
@@ -23,7 +25,7 @@ PoolNode * PoolNode_create(int value, ClientNode *client)
     if (node != NULL)
     {
         node->value = value;
-        node->is_in_use = IN_USE;
+        node->status = IN_USE;
 
         // create client list
         LList *client_list = (LList *) malloc(sizeof(LList));
@@ -84,9 +86,10 @@ void PoolList_print(LList *llist)
         PoolNode *pool_node = (PoolNode *) llist->head;
         while(pool_node != NULL)
         {
+
             printf("\nPool Node #%d\n-------------\n", pool_node_count);
             printf("Value: %d\n", pool_node->value);
-            printf("In use: %d (1 = in use, 0 = free)\n", pool_node->is_in_use);
+            printf("Status: %s\n", NUMBER_STATUS[pool_node->status]);
             ClientList_print(pool_node->current_client);
             printf("------------------------------------------\n");
             pool_node = pool_node->next;

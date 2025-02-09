@@ -5,7 +5,7 @@ SERVER_SRC = LList.c Pool.c Request.c Response.c Server.c
 SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
 # source and object files for the client
-CLIENT_SRC = LList.c ClientMain.c Pool.c Request.c Response.c Client.c
+CLIENT_SRC = LList.c Number.c ClientMain.c Pool.c Request.c Response.c Client.c
 CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
 
 # Exec files

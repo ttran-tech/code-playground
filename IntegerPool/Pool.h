@@ -16,7 +16,7 @@ typedef struct ClientNode
 typedef struct PoolNode
 {
     int value;
-    int is_in_use;  // 1 = in used, 0 = free
+    int status;  // 1 = in used, 0 = free
     ClientNode *current_client;
     struct LList *client_list;
     struct PoolNode *next;
