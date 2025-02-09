@@ -1,3 +1,4 @@
+#include "Common.h"
 #include "Number.h"
 
 NumberNode * NumberNode_search(LList *llist, int value)
@@ -19,5 +20,17 @@ NumberNode * NumberNode_search(LList *llist, int value)
 
 int NumberNode_has_value(LList *llist, int value)
 {
-    
+    NumberNode *node = llist->head;
+    if (node != NULL)
+    {
+        while (node != NULL)
+        {
+            if (node->value == value)
+            {
+                return TRUE;
+            }
+            node = node->next;
+        }
+    }
+    return FALSE;
 }
