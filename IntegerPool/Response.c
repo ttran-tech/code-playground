@@ -4,7 +4,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-
 #include "Response.h"
 #include "Common.h"
 

@@ -21,6 +21,10 @@ int main()
         {
             print_number_list(number_list);
         }
+        else if (menu_choice == REFRESH_NUMBER)
+        {
+            process_response(number_list);
+        }
         else if (menu_choice == EXIT)
         {
             break;

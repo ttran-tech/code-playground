@@ -6,6 +6,7 @@
 
 #define GRANTED 1
 #define WAITING 2
+#define RELEASE 3
 
 typedef struct Response
 {
