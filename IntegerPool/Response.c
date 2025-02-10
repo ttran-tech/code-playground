@@ -20,6 +20,5 @@ void write_response(pid_t client_id, int response_type, int value)
 
     fd = open(FIFO_PATH, O_WRONLY);
     write(fd, &response, sizeof(response));
-    //write(fd, &response, sizeof(response));
     close(fd);
 }
