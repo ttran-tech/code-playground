@@ -5,13 +5,13 @@
 #include "Pool.h"
 
 #define GRANTED 1
-#define WAITING 2
+#define DENIED 0
 #define RELEASE 3
 
 typedef struct Response
 {
     pid_t client_id;
-    int response_type; // 1 = granted, 2 = waiting
+    int response_type; // 1 = granted, 0 = denied
     int value;
 } Response;
 

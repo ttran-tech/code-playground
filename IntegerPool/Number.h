@@ -5,6 +5,7 @@
 
 typedef struct NumberNode {
     int value;
+    struct NumberNode *prev;
     struct NumberNode *next;
 } NumberNode;
 
