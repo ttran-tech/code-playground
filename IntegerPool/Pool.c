@@ -5,7 +5,7 @@
 #include "Common.h"
 #include "Pool.h"
 
-const char* NUMBER_STATUS[2] = {"FREE", "IN USE"};
+const char* POOL_NODE_STATUS[2] = {"FREE", "IN USE"};
 
 ClientNode * ClientNode_create(pid_t client_pid, char *status)
 {
@@ -25,20 +25,8 @@ PoolNode * PoolNode_create(int value, ClientNode *client)
     if (node != NULL)
     {
         node->value = value;
-        node->status = IN_USE;
-
-        // create client list
-        LList *client_list = (LList *) malloc(sizeof(LList));
-        if (client_list != NULL)
-        {
-            client_list->head = (void *) client;
-            client_list->tail = (void *) client;
-            client_list->size++;
-
-            node->current_client = (ClientNode *) client_list->head;
-            node->client_list = client_list;
-        }
-
+        node->status = POOL_NODE_IN_USE;
+        node->current_client = client;
         node->next = NULL;
     }
     return node;
@@ -52,9 +40,7 @@ PoolNode * PoolNode_search(LList *llist, int value)
         while (node != NULL)
         {
             if (node->value == value)
-            {
                 return node;
-            }
             node = node->next;
         }
     }
@@ -69,9 +55,7 @@ int PoolNode_has_value(LList *llist, int value)
         while (node != NULL)
         {
             if (node->value == value)
-            {
                 return TRUE;
-            }
             node = node->next;
         }
     }
@@ -87,11 +71,12 @@ void PoolList_print(LList *llist)
         while(pool_node != NULL)
         {
 
-            printf("\nPool Node #%d\n-------------\n", pool_node_count);
+            printf("\n [ Pool Node #%d ]\n", pool_node_count);
+            printf("==============================================\n");
             printf("Value: %d\n", pool_node->value);
-            printf("Status: %s\n", NUMBER_STATUS[pool_node->status]);
+            printf("Status: %s\n", POOL_NODE_STATUS[pool_node->status]);
             ClientList_print(pool_node->current_client);
-            printf("------------------------------------------\n");
+            printf("-----------------------------------------------\n");
             pool_node = pool_node->next;
             pool_node_count++;
         }
