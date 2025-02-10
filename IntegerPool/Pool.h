@@ -3,8 +3,8 @@
 
 #include "LList.h"
 
-#define IN_USE 1
-#define FREE 0
+#define POOL_NODE_IN_USE 1
+#define POOL_NODE_FREE 0
 
 typedef struct ClientNode 
 {
