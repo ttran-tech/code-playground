@@ -13,7 +13,6 @@
 #define REQUEST_NUMBER 1
 #define RELEASE_NUMBER 2
 #define VIEW_NUMBER_LIST 3
-#define REFRESH_NUMBER 4
-#define EXIT 5
+#define EXIT 4
 
 #endif
