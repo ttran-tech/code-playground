@@ -14,37 +14,3 @@ int LList_is_empty(LList *llist)
 {
     return (llist->size == 0);
 }
-
-// void * LList_search(LList *llist, int value)
-// {
-//     void *node = llist->head;
-//     if (node != NULL)
-//     {
-//         while (node != NULL)
-//         {
-//             if (node->value == value)
-//             {
-//                 return node;
-//             }
-//             node = node->next;
-//         }
-//     }
-//     return NULL;
-// }
-
-// int LList_has(LList *llist, int value)
-// {
-//     PoolNode *node = llist->head;
-//     if (node != NULL)
-//     {
-//         while (node != NULL)
-//         {
-//             if (node->value == value)
-//             {
-//                 return TRUE;
-//             }
-//             node = node->next;
-//         }
-//     }
-//     return FALSE;
-// }

@@ -8,7 +8,6 @@ int main()
     while (TRUE)
     {
         menu_choice = print_menu();
-
         if (menu_choice == REQUEST_NUMBER)
         {
             client_request_number(number_list);
@@ -29,7 +28,5 @@ int main()
         {
             printf(" *** Invalid choice\n");
         }
-
-        // process_response(number_list);
     }
 }
