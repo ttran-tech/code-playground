@@ -1,6 +1,6 @@
 # Testing and Experimentation Project
 
-This repository contains a collection of personal projects created for testing and experimentation purpose.These projects explore various programming concepts, libraries, and techniques. They are mainly intended for hands-on learning, trying out new ideas, and solving programming challenges.
+This repository contains a collection of personal projects created for testing and experimenting purpose.These projects explore various programming concepts, libraries, and techniques. They are mainly intended for hands-on learning, trying out new ideas, and solving programming challenges.
 
 ## Purpose
 
