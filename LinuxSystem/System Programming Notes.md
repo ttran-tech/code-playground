@@ -26,3 +26,6 @@
 - Library functions are designed over the system calls in order to provide more additional functionality in the library functions.
 
 ![alt text](res/library_function_interface.png)
+
+## File Permission
+![image](https://github.com/user-attachments/assets/80b0562d-0d10-42b6-942e-3bf740727c37)
