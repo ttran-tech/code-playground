@@ -7,7 +7,7 @@
     "settings": {
         "files.associations": {
             "common.h": "c",
-            "request.h": "c"
+            "request.h": "c",
         }
     }
 }
