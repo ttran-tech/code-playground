@@ -1,5 +1,10 @@
 # System Programming Notes
 
+## Table of Contents
+
+- [System Calls](#system-calls)
+- [Invoke Syscalls](#invoke-syscalls)
+
 ## System Calls
 - *System calls* (*syscalls*) - are functions invocation that made from user space into the kernel to request some service or resources from the OS.
 
