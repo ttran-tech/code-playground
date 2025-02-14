@@ -11,7 +11,9 @@
 - System calls can be invoked from user application in 2 ways:
     1. Directly calling the system call.
     2. The user code calls the library function, and this function invokes or calls the systems calls when required.
-    
+
+![alt text](res/system_call_workflow.png)
+
 ### Invoke Syscalls
 - User mode applications are not allow to directly execute Kernel code or manipulate kernel data.
 - Linux provides a set of syscall to pass control from User mode to Kernel mode.
