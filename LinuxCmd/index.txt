@@ -1,1 +1,98 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Regex Practice Page</title>
+    
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        .highlight { color: #FF5733; } /* Some random hex colors */
+        .user-info { background: #123abc; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Page Title -->
+    <h1>🔍 Advanced Regex Practice Page</h1>
+
+    <!-- Contact Section -->
+    <h2>📞 Contact Information</h2>
+    <p>Customer Service: (555) 123-4567, Support: +1-800-987-6543</p>
+    <p>International: +44 208 123 4567, Local: 212.555.7890</p>
+
+    <!-- Email Addresses -->
+    <h2>📧 Emails</h2>
+    <p>Contact: <a href="mailto:info@example.com">info@example.com</a></p>
+    <p>Other emails: admin@company.org, user.name+regex@gmail.com</p>
+    <p>Hidden email: <!-- hidden.email@secret.com --></p>
+
+    <!-- Website Links -->
+    <h2>🌐 Website Links</h2>
+    <ul>
+        <li><a href="https://www.example.com/home">https://www.example.com/home</a></li>
+        <li><a href="https://sub.domain.net/path/to/page?query=123">https://sub.domain.net/path/to/page?query=123</a></li>
+        <li><a href="http://blog.example.org/articles/post-1">http://blog.example.org/articles/post-1</a></li>
+        <li><a href="https://cdn.example.io/assets/image.jpg">https://cdn.example.io/assets/image.jpg</a></li>
+    </ul>
+
+    <!-- Date Formats -->
+    <h2>📅 Dates</h2>
+    <p>Today's Date: 02/18/2025</p>
+    <p>Other formats: 2025-02-18, 18-Feb-2025, March 5th, 2024</p>
+
+    <!-- IP Addresses -->
+    <h2>🖥 IP Addresses</h2>
+    <p>Internal: 192.168.1.100, 10.0.0.45</p>
+    <p>Public: 8.8.8.8, 203.0.113.76</p>
+
+    <!-- Credit Card Numbers -->
+    <h2>💳 Credit Card Numbers (Dummy)</h2>
+    <p>Visa: 4111-1111-1111-1111</p>
+    <p>MasterCard: 5500-0000-0000-0004</p>
+    <p>AMEX: 3714-496353-98431</p>
+
+    <!-- User Credentials -->
+    <h2>🔑 User Credentials</h2>
+    <p>Username: regex_pro99, Password: P@ssw0rd123!</p>
+    <p>Test user: john_doe, Pass: MySecret99</p>
+
+    <!-- Table Example -->
+    <h2>📊 User Data Table</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>IP</th>
+        </tr>
+        <tr>
+            <td>Alice</td><td>alice@example.com</td><td>(123) 456-7890</td><td>192.168.1.101</td>
+        </tr>
+        <tr>
+            <td>Bob</td><td>bob@work.net</td><td>+1-987-654-3210</td><td>203.0.113.55</td>
+        </tr>
+    </table>
+
+    <!-- Form Example -->
+    <h2>📝 Registration Form</h2>
+    <form action="/submit" method="POST">
+        Name: <input type="text" name="name"><br>
+        Email: <input type="email" name="email"><br>
+        Password: <input type="password" name="password"><br>
+        <input type="submit" value="Register">
+    </form>
+
+    <!-- JavaScript Variables -->
+    <script>
+        // Some API endpoints with URLs
+        var apiUrl = "https://api.example.com/v1/data";
+        var userEmail = "developer@tech.dev";
+        var userIp = "10.1.1.50";
+        
+        // Function with a phone number
+        function contactSupport() {
+            console.log("Call +1-555-900-1234 for support.");
+        }
+    </script>
+
+</body>
+</html>
