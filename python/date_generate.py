@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from itertools import filterfalse
 import re, traceback, random, json
 
 
@@ -31,20 +32,22 @@ def generate_active_dates(start_date:str, end_date:str, min_active_days_per_week
     end_date = datetime.strptime(f"{end_date}", DATE_FORMAT)
     week_total = int(((end_date - start_date).days) / DAYS_PER_WEEK)  # get the number of weeks between the start and end date
 
-    active_dates = []
+    # active_date = []
+    active_dates = set()
     next_start_date = start_date
     for i in range(week_total):
         active_date_per_week = random.randint(min_active_days_per_week, max_active_days_per_week)
         next_end_date = next_start_date + timedelta(days=DAYS_PER_WEEK)
         dates = [(next_start_date + timedelta(days=n)) for n in range((next_end_date - next_start_date).days + 1)]
         for j in range(active_date_per_week):
-            while True:
-                date = random.choice(dates).strftime(DATE_FORMAT)
-                if date not in active_dates:
-                    active_dates.append(date)
-                    break
+            # Use filterfalse to eliminate the elements already in active_dates, 
+            # and create a list of available dates
+            available_dates = list(filterfalse(active_dates.__contains__, dates))
+            if available_dates:
+                date = random.choice(available_dates).strftime(DATE_FORMAT)
+                active_dates.add(date)
         next_start_date = next_end_date
-    active_dates.sort()
+    active_dates = sorted(active_dates)
     return active_dates
 
 
@@ -61,7 +64,6 @@ def generate_commit_hours(active_dates:list[datetime], start_hour:int, end_hour:
             commit_hours.append(f"{hour:02d}:{minute:02d}:{second:02d}")
         commit_hours.sort()
         commit_dates[active_date] = commit_hours
-
     return commit_dates
 
 
