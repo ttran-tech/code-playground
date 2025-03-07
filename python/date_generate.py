@@ -11,20 +11,7 @@ class FormatError(Exception):
 
 
 def generate_commit_dates(start_date:str, end_date:str, min_active_days_per_week:int, max_active_days_per_week:int, start_hour:int, end_hour:int, min_commit_per_day:int, max_commit_per_day:int) -> dict[str, list[str]]:
-    """
-    Generate a list of date between two dates
-    
-    Parameters:
-    start_date(str):    starting date, format as YYYY-MM-DD
-    end_date(str):      ending date, format as YYYY-MM-DD
-    start_hour(str):    starting hour per date, format as hour:minutes:second
-    end_hour(str):      ending hour per date, format as hour:minutes:second
-    min_active_days_per_week(int): minimum active days per week, used for random function as the minimum value
-    max_active_days_per_week(int): maximum active days per week, used for maximum value in random function
-
-    Return:
-    list[datetime]:     return a list of datetime objects
-    """
+    """Generate a commit dates dictionary and pair each entry with a list commit hours."""
     try:
         active_dates = generate_active_dates(start_date, end_date, min_active_days_per_week, max_active_days_per_week)
         commit_dates = generate_commit_hours(active_dates, start_hour, end_hour, min_commit_per_day, max_commit_per_day)
@@ -33,19 +20,8 @@ def generate_commit_dates(start_date:str, end_date:str, min_active_days_per_week
         traceback.print_exc()
 
 
-def generate_active_dates(start_date:str, end_date:str, min_active_days_per_week:int, max_active_days_per_week:int) -> list[datetime]:
-    """
-    Generate a list of date between two dates
-    
-    Parameters:
-    start_date(str):    starting date, format as YYYY-MM-DD
-    end_date(str):      ending date, format as YYYY-MM-DD
-    min_active_days_per_week(int): minimum active days per week, used for random function as the minimum value
-    max_active_days_per_week(int): maximum active days per week, used for maximum value in random function
-
-    Return:
-    list[datetime]:     return a list of datetime objects
-    """
+def generate_active_dates(start_date:str, end_date:str, min_active_days_per_week:int, max_active_days_per_week:int) -> list[str]:
+    """Generate a list of active dates"""
     DATE_REGEX_PATTERN = r'^(\d{4})-(\d{2})-(\d{2})$'
     if not bool(re.match(DATE_REGEX_PATTERN, start_date)) or not bool(re.match(DATE_REGEX_PATTERN, end_date)):
         raise FormatError('Invalid date format. Date format must match "YYYY-MM-DD". Example: 2025-01-01')
@@ -54,7 +30,7 @@ def generate_active_dates(start_date:str, end_date:str, min_active_days_per_week
     start_date = datetime.strptime(f"{start_date}", DATE_FORMAT)
     end_date = datetime.strptime(f"{end_date}", DATE_FORMAT)
     week_total = int(((end_date - start_date).days) / DAYS_PER_WEEK)  # get the number of weeks between the start and end date
-    
+
     active_dates = []
     next_start_date = start_date
     for i in range(week_total):
@@ -73,6 +49,7 @@ def generate_active_dates(start_date:str, end_date:str, min_active_days_per_week
 
 
 def generate_commit_hours(active_dates:list[datetime], start_hour:int, end_hour:int, min_commit_per_day:int, max_commit_per_day:int) -> dict[str,list[str]]:
+    """Generate commit hours per date"""
     commit_dates = {}
     for active_date in active_dates:
         commit_hours = []
