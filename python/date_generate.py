@@ -28,27 +28,35 @@ def generate_commit_dates(start_date:str, end_date:str, min_active_days_per_week
         start_date = datetime.strptime(f"{start_date}", DATE_FORMAT)
         end_date = datetime.strptime(f"{end_date}", DATE_FORMAT)
 
+        day_total = (end_date - start_date).days + 1 # get total days in range
+
         # Get the number of weeks between the start and end date
-        week_total = ((end_date - start_date).days) // DAYS_PER_WEEK
-        print(f" [+] Week Total: {week_total}")
+        week_total = day_total // DAYS_PER_WEEK + (1 if day_total % DAYS_PER_WEEK else 0) # count partial week
+        print(f" [+] Week Total: {week_total} | Total Days: {day_total}")
 
         # active_date = []
         active_dates = set()
         next_start_date = start_date
-        for i in range(week_total):
-            active_date_per_week = random.randint(min_active_days_per_week, max_active_days_per_week)
-            next_end_date = next_start_date + timedelta(days=DAYS_PER_WEEK)
-            dates = [(next_start_date + timedelta(days=n)) for n in range((next_end_date - next_start_date).days + 1)]
-            for j in range(active_date_per_week):
+        for _ in range(week_total):
+            week_end = min(next_start_date + timedelta(days=DAYS_PER_WEEK - 1), end_date) # handle last week
+            days_in_week = (week_end - next_start_date).days + 1
+
+            # Ensure at least 3 ~ 6 active days per week dynamically
+            adjusted_min_days = max(min_active_days_per_week, min(3, days_in_week // 2))
+            adjusted_max_days = min(max_active_days_per_week, days_in_week)
+            active_date_per_week = random.randint(adjusted_min_days, adjusted_max_days)
+            
+            dates = [(next_start_date + timedelta(days=n)) for n in range(days_in_week)]
+            for _ in range(active_date_per_week):
                 # Use filterfalse to eliminate the elements already in active_dates, 
                 # and create a list of available dates
                 available_dates = list(filterfalse(active_dates.__contains__, dates))
                 if available_dates:
                     date = random.choice(available_dates).strftime(DATE_FORMAT)
                     active_dates.add(date)
-            next_start_date = next_end_date
-        active_dates = sorted(active_dates)
-        return active_dates
+
+            next_start_date = week_end + timedelta(days=1) # move to next week
+        return sorted(active_dates)
 
     def _generate_commit_hours(active_dates:List[datetime], start_hour:int, end_hour:int, min_commit_per_day:int, max_commit_per_day:int) -> Dict[str,List[str]]:
         """Generate commit hours per date"""
@@ -77,13 +85,13 @@ def generate_commit_dates(start_date:str, end_date:str, min_active_days_per_week
 if __name__ == '__main__':
     start_date = '2023-01-01'
     end_date = '2023-02-01'
-    min_active_day_per_week = 2
-    max_active_day_per_week = 5
+    min_active_days_per_week = 2
+    max_active_days_per_week = 5
     start_hour = 8
     end_hour = 17
     min_commit_per_day = 1
     max_commit_per_day = 5
-    commit_dates = generate_commit_dates(start_date, end_date, min_active_day_per_week, max_active_day_per_week, start_hour, end_hour, min_commit_per_day, max_commit_per_day)
+    commit_dates = generate_commit_dates(start_date, end_date, min_active_days_per_week, max_active_days_per_week, start_hour, end_hour, min_commit_per_day, max_commit_per_day)
     
     print(f"\t Total commit_dates: {len(commit_dates.keys())}")
     if commit_dates:
